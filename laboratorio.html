@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misterio - Laboratorio</title>
+  <link rel="stylesheet" href="multipage.css">
+</head>
+<body class="room-page">
+  <div id="room-root" data-room="laboratorio"></div>
+  <header class="scene-header">
+    <div>
+      <p class="eyebrow">Cena</p>
+      <h1 id="room-title"></h1>
+      <p id="room-goal" class="muted"></p>
+    </div>
+    <div class="scene-nav">
+      <a class="scene-link" href="mapa.html">Voltar ao mapa</a>
+      <span class="muted">Progresso: <strong id="room-count">0/0</strong></span>
+    </div>
+  </header>
+
+  <main class="scene-content">
+    <section class="scene-image-wrap">
+      <img id="room-image" class="scene-image" src="" alt="Sala">
+    </section>
+    <aside class="scene-panel">
+      <h2>Itens da sala</h2>
+      <p class="muted">Clique em cada item para marcar como encontrado.</p>
+      <div id="room-items" class="item-list"></div>
+    </aside>
+  </main>
+
+  <audio id="fx-audio" preload="none"
+    data-success="assets/audio/sfx_success.mp3"
+    data-locked="assets/audio/sfx_locked.mp3"
+    data-pickup="assets/audio/sfx_pickup.mp3"></audio>
+
+  <script src="room-pages.js"></script>
+</body>
+</html>
