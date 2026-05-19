@@ -1,5 +1,38 @@
 # Mansao Misterio - Documento de Evolucao
 
+## Atualizacao 19/05/2026 - Entrega Hall Polido
+
+### Implementado nesta entrega
+- Inventario agora exibe PNG real dos itens (na grade, no detalhe e no slot da mao).
+- Itens combinaveis receberam marcador visual com simbolo de engrenagem.
+- Cenas abertas exibem itens coletaveis visiveis e marcador de mecanismo para pontos de uso de item.
+- Ajuste de enquadramento das cenas no frame com suporte a rolagem quando necessario.
+- Sons ativos usando arquivos existentes em `assets/audio/`:
+  - `ChaveGirando.mp3` para coleta
+  - `somSombrio.mp3` para bloqueio/erro
+  - `destrancar.mp3` para sucesso
+- Ajuste de hotspot da lareira e criacao do hotspot/cena de armario.
+- Novas cenas no Hall adicionadas:
+  - Cena Armario antigo (puzzle novo)
+  - Cena Escadaria lateral (puzzle novo)
+- Novos puzzles com feedback:
+  - `armario_done` (sequencia)
+  - `hall_stair_done` (sequencia)
+
+### Resultado esperado em jogo
+- Hall com mais cantos interativos e fluxo mais rico.
+- Inventario mais legivel e visualmente coerente com os PNGs novos.
+- Mais feedback visual e sonoro durante exploracao/puzzle.
+
+### Sons adicionais recomendados (enviar quando puder)
+- `sfx_scene_open.mp3` (abrir cena dedicada)
+- `sfx_drag_drop.mp3` (arrastar/soltar item em hotspot)
+- `sfx_combine.mp3` (forja concluida)
+- `sfx_puzzle_step_ok.mp3` (passo correto de puzzle sequencial)
+- `sfx_puzzle_fail.mp3` (erro em puzzle)
+- `amb_hall_loop.mp3` (ambiancia Hall)
+- `amb_scene_subtle_loop.mp3` (ambiancia cenas close-up)
+
 ## 1) Estado Atual Implementado
 
 ### Base multipagina
