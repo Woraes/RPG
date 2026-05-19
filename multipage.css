@@ -1010,8 +1010,10 @@ body.debug-hotspots .invisible-hotspot::after {
 }
 
 .slot-sprite {
-  width: 34px;
-  height: 34px;
+  width: 48px;
+  height: 48px;
+  max-width: 100%;
+  max-height: 48px;
   object-fit: contain;
   display: block;
   margin: 0 auto;

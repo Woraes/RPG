@@ -224,7 +224,7 @@
             scene: {
               id: 'scene-fireplace',
               title: 'Cena: Lareira em chamas',
-              image: 'assets/images/scenes/hall_fireplace_scene_v2.png',
+              image: 'assets/images/scenes/hall_cabinet_drawers_scene.png',
               fallbackImage: 'assets/images/hall_principal.png',
               hotspots: [
                 { label: 'Mecanismo da grade da lareira', x: 47, y: 51, w: 12, h: 18, action: { type: 'use_item_reward', requiredItem: 'water_jar', consume: true, rewardItem: 'medallion', doneFlag: 'fireplace_done', successMessage: 'Mecanismo resfriado e aberto. Medalhao Antigo revelado.' } }
@@ -244,7 +244,7 @@
             scene: {
               id: 'scene-armario',
               title: 'Cena: Armario antigo',
-              image: 'assets/images/hall_principal.png',
+              image: 'assets/images/scenes/hall_fireplace_scene_v2.png',
               fallbackImage: 'assets/images/hall_principal.png',
               hotspots: [
                 { label: 'Tranca interna do armario', x: 45, y: 56, w: 12, h: 20, action: { type: 'use_item_reward', requiredItem: 'crowbar', consume: false, rewardItem: 'hairpin', doneFlag: 'armario_done', successMessage: 'Tranca forcada. Um grampo caiu de dentro do armario.' } }
@@ -264,7 +264,7 @@
             scene: {
               id: 'scene-hall-stair',
               title: 'Cena: Escadaria lateral',
-              image: 'assets/images/hall_principal.png',
+              image: 'assets/images/scenes/hall_stair_compartment_scene.png',
               fallbackImage: 'assets/images/hall_principal.png',
               hotspots: [
                 { label: 'Placa solta no corrimao', x: 52, y: 48, w: 14, h: 20, action: { type: 'use_item_reward', requiredItem: 'metal_pliers', consume: false, rewardItem: 'gear_piece', doneFlag: 'hall_stair_done', successMessage: 'Compartimento aberto. Outra engrenagem foi encontrada.' } }
