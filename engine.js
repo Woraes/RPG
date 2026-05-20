@@ -239,7 +239,13 @@
     if (!overlays) return;
 
     overlays.forEach(overlay => {
-      const shouldShow = hasFlag(overlay.flag);
+      let shouldShow = false;
+      if (overlay.flag) {
+        shouldShow = hasFlag(overlay.flag);
+      } else if (overlay.requiredFlags && Array.isArray(overlay.requiredFlags)) {
+        shouldShow = overlay.requiredFlags.every(f => hasFlag(f));
+      }
+      
       if (shouldShow) {
         const div = document.createElement('div');
         div.className = 'scene-visual-overlay';
@@ -361,6 +367,7 @@
 
     // 0. AÇÃO APENAS MENSAGEM
     if (action.type === 'message') {
+      if (action.setFlag) setFlag(action.setFlag);
       triggerDialogue([{ speaker: 'Liora Voss', text: action.message }]);
       return;
     }
@@ -397,11 +404,12 @@
 
     // 3. AÇÃO COLETAR ITEM (pickup)
     if (action.type === 'pickup') {
-      if (hasFlag(action.flag)) return;
+      const collectionFlag = action.flag || `picked_${action.itemId}`;
+      if (hasFlag(collectionFlag)) return;
 
       const proceedCollect = () => {
         addItem(action.itemId);
-        setFlag(action.flag);
+        setFlag(collectionFlag);
         playSfx('pickup');
         showToast(`Coletou: ${STORY_DATA.items[action.itemId].name}`);
         

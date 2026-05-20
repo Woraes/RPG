@@ -20,35 +20,35 @@ const STORY_DATA = {
       id: "banquinho_dobravel",
       name: "Banquinho Dobrável",
       emoji: "🪑",
-      sprite: "assets/images/itens/banquinho_dobravel.png",
+      sprite: "banquinho_dobravel.png",
       description: "Um banquinho pequeno e leve. Pode ser arrastado para alcançar lugares altos."
     },
     chave_fenda_enferrujada: {
       id: "chave_fenda_enferrujada",
       name: "Chave de Fenda Enferrujada",
       emoji: "🔧",
-      sprite: "assets/images/itens/chave_fenda_enferrujada.png",
+      sprite: "chave_fenda_enferrujada.png",
       description: "Ferramenta de metal com cabo de madeira. A ponta está oxidada mas ainda funciona."
     },
     mapa_costa: {
       id: "mapa_costa",
       name: "Mapa da Costa",
       emoji: "🗺️",
-      sprite: "assets/images/itens/mapa_costa.png",
+      sprite: "mapa_costa.png",
       description: "Mapa antigo marcando pontos costeiros. Contém pistas visuais sobre os símbolos do baú."
     },
     frasco_oleo: {
       id: "frasco_oleo",
       name: "Frasco de Óleo",
       emoji: "🧴",
-      sprite: "assets/images/itens/frasco_oleo.png",
+      sprite: "frasco_oleo.png",
       description: "Óleo lubrificante com aroma de âmbar. Serve para desferrujar mecanismos oxidados."
     },
     manivela_bronze: {
       id: "manivela_bronze",
       name: "Manivela de Bronze",
       emoji: "🔩",
-      sprite: "assets/images/itens/manivela_bronze.png",
+      sprite: "manivelamontada.png",
       description: "Peça de bronze pesada com encaixes específicos. Parece faltar em algum mecanismo importante."
     }
   },
@@ -110,6 +110,22 @@ const STORY_DATA = {
           y: 80,
           w: 5,
           h: 8
+        },
+        {
+          flag: "painel_aberto",
+          image: "assets/images/scenes/painel_mecanismo.png",
+          x: 85,
+          y: 70,
+          w: 10,
+          h: 15
+        },
+        {
+          flag: "trava_destrancada",
+          image: "assets/images/scenes/trava_destrancada.png",
+          x: 45,
+          y: 15,
+          w: 10,
+          h: 20
         }
       ],
 
@@ -144,6 +160,16 @@ const STORY_DATA = {
               id: "closeup_estante",
               title: "Livros Antigos",
               image: "assets/images/scenes/estante_livros_closeup.png",
+              overlays: [
+                {
+                  flag: "livro_puxado",
+                  image: "assets/images/scenes/estante_livros_open.png",
+                  x: 0,
+                  y: 0,
+                  w: 100,
+                  h: 100
+                }
+              ],
               hotspots: [
                 {
                   id: "livro_maré",
@@ -154,8 +180,10 @@ const STORY_DATA = {
                   h: 25,
                   action: {
                     type: "message",
-                    message: "Um livro pesado com o símbolo de maré em relevo. A primeira pista."
-                  }
+                    setFlag: "livro_puxado",
+                    message: "Você puxa o livro com o símbolo de maré. Um ruído metálico indica que algo se moveu."
+                  },
+                  inactiveIfFlag: "livro_puxado"
                 }
               ]
             }
@@ -176,6 +204,16 @@ const STORY_DATA = {
               id: "closeup_mesa",
               title: "Mesa com Ferramentas",
               image: "assets/images/scenes/mesa_trabalho_closed.png",
+              overlays: [
+                {
+                  requiredFlags: ["picked_mapa", "picked_chave_fenda"],
+                  image: "assets/images/scenes/mesa_trabalho_open.png",
+                  x: 0,
+                  y: 0,
+                  w: 100,
+                  h: 100
+                }
+              ],
               hotspots: [
                 {
                   id: "chave_fenda_pickup",
@@ -186,7 +224,8 @@ const STORY_DATA = {
                   h: 15,
                   action: {
                     type: "pickup",
-                    itemId: "chave_fenda_enferrujada"
+                    itemId: "chave_fenda_enferrujada",
+                    flag: "picked_chave_fenda"
                   },
                   inactiveIfFlag: "picked_chave_fenda"
                 },
@@ -199,7 +238,8 @@ const STORY_DATA = {
                   h: 20,
                   action: {
                     type: "pickup",
-                    itemId: "mapa_costa"
+                    itemId: "mapa_costa",
+                    flag: "picked_mapa"
                   },
                   inactiveIfFlag: "picked_mapa"
                 }
@@ -233,7 +273,8 @@ const STORY_DATA = {
           h: 10,
           action: {
             type: "pickup",
-            itemId: "frasco_oleo"
+            itemId: "frasco_oleo",
+            flag: "picked_oleo"
           },
           activeIfFlag: "banco_posicionado",
           inactiveIfFlag: "picked_oleo"
@@ -269,7 +310,8 @@ const STORY_DATA = {
           h: 8,
           action: {
             type: "pickup",
-            itemId: "manivela_bronze"
+            itemId: "manivela_bronze",
+            flag: "picked_manivela"
           },
           activeIfFlag: "puzzle_baú_resolvido",
           inactiveIfFlag: "picked_manivela"
