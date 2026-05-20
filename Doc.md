@@ -325,3 +325,16 @@ Fase 3 - qualidade mobile:
 - Hotspots permanecem alinhados apos rotacao
 - Inventario e mapa acessiveis sem encobrir HUD
 - Cenas de puzzle legiveis em telas pequenas
+
+
+eu quero reformular  esse projeto 
+
+quero que ele seja uma receita de bolo para novas historias.
+exemplos criamos uma nova histotria com ia pegamos e criamos os itens e as cenas e os pluzzes e a partir disso fica mais facil vc montar entao quero recomeçar com uma historia nova preciso que vc monte um Guia.md onde esse sera adicionado as regras daquela historia e vou te mandar imagens de um jogo que quqero que seja parecido
+
+exemplo nesse game o mouse nao muda ao passar nos item , porem se clico num armario ele fala nao a nada aqui , se clico numa porta fala precisa da cha tal , se abro uma caixa apois o pluzze a caixa fica aberta na imagem entendeu, entao temos que criar essa mudança visuaais tipo ao cria o cenario poderiamos colocar os objetos da sena como imagens que mudam se abrir uma caixa e tal 
+
+outro exemplo cliquei num armario fechado, ele abriu e apareceu um banco dentro dele cliquei o banco veio para o invetario ai tinha um pote de doce em cima de outro armario alto ao clicar fala nao consigo alcançar ai clico no banco que peguei arrasto pra la ai o banco ja fica na frente do armario e me permite pegar o doce podemos fazer a logica do cenario por completa
+
+
+vc pode me ajudar nisso sei que parece muito mais nao é e  o basico 

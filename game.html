@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Point-and-Click Adventure</title>
+  <link rel="stylesheet" href="multipage.css?v=20260520a">
+</head>
+<body class="room-page">
+  <!-- Container Principal do Jogo -->
+  <div id="game-container">
+    <header class="scene-header">
+      <div>
+        <p class="eyebrow">Cena</p>
+        <h1 id="room-title">Carregando...</h1>
+        <p id="room-goal" class="muted"></p>
+      </div>
+      <div class="scene-nav">
+        <a class="scene-link" href="mapa.html">Voltar ao mapa</a>
+        <span class="muted">Capacidade: <strong id="room-count">0/0</strong></span>
+      </div>
+    </header>
+
+    <main class="scene-content">
+      <!-- Frame da Cena (Contém imagem, overlays, lanterna e hotspots) -->
+      <section class="scene-image-wrap">
+        <div class="scene-frame" id="scene-frame">
+          <img id="room-image" class="scene-image" src="" alt="Cenário Principal">
+          
+          <!-- Camada de Poeira/Volumétrica -->
+          <div class="scene-dust-overlay" aria-hidden="true"></div>
+          
+          <!-- Camada de Lanterna -->
+          <div class="lantern-overlay" id="lantern-overlay"></div>
+          
+          <!-- Camada de Overlays de Estado Visuais -->
+          <div class="overlays-layer" id="overlays-layer"></div>
+          
+          <!-- Camada de Itens Coletáveis Visíveis -->
+          <div class="scene-items-layer" id="scene-items-layer"></div>
+          
+          <!-- Camada de Hotspots Invisíveis Interativos -->
+          <div class="hotspots-layer" id="hotspots-layer"></div>
+        </div>
+      </section>
+
+      <!-- Painel de Detalhes / Inventário no HUD -->
+      <aside class="scene-panel" id="room-items-panel">
+        <!-- O conteúdo será injetado dinamicamente pelo engine.js -->
+      </aside>
+    </main>
+  </div>
+
+  <!-- HUD Fixo de Ações Rápidas no Rodapé -->
+  <div class="game-hud">
+    <div class="hud-info">
+      <p class="hud-title" id="hud-room-title">Carregando...</p>
+      <p class="hud-subtitle" id="hud-room-goal"></p>
+    </div>
+    <div class="hud-actions">
+      <a class="hud-btn" href="mapa.html">Mapa</a>
+      <button class="hud-btn" id="hud-toggle-inventory" type="button">Inventário</button>
+      <span class="hud-clock" id="hud-clock">00:00</span>
+    </div>
+  </div>
+
+  <!-- Slot Rápido de Mão Equipada -->
+  <button class="hand-slot" id="hand-slot" type="button">
+    <span class="hand-text">Mão vazia</span>
+  </button>
+
+  <!-- Caixa de Diálogo Gótica -->
+  <div class="dialog-box" id="dialog-box">
+    <div class="dialog-frame">
+      <span class="dialog-speaker" id="dialog-speaker">Narrador</span>
+      <p class="dialog-text" id="dialog-text">O mistério o aguarda...</p>
+      <span class="dialog-indicator">▶</span>
+    </div>
+  </div>
+
+  <!-- Overlay para Inventário em Tela Cheia -->
+  <div class="inventory-overlay hidden" id="inventory-overlay">
+    <div class="inventory-shell">
+      <button id="inventory-close" class="inventory-close" type="button">Fechar</button>
+      <!-- O painel de inventário será anexo aqui -->
+    </div>
+  </div>
+
+  <!-- Overlay para Close-up de Cenas Dedicadas (Zoom) -->
+  <div class="puzzle-scene-overlay hidden" id="scene-overlay">
+    <div class="puzzle-scene-shell">
+      <button id="scene-exit" class="scene-exit" type="button">Fechar Cena</button>
+      <h3 id="scene-title" class="scene-title">Close-up</h3>
+      <div id="scene-stage" class="scene-stage">
+        <img id="scene-image" class="scene-image-full" alt="Cena zoomed">
+        
+        <!-- Poeira e lanterna do Closeup -->
+        <div class="scene-dust-overlay" aria-hidden="true"></div>
+        <div id="scene-lantern" class="lantern-overlay"></div>
+        
+        <!-- Overlays visuais de estado específicos do Closeup -->
+        <div id="scene-overlays" class="overlays-layer"></div>
+        
+        <!-- Itens e hotspots do Closeup -->
+        <div id="scene-items" class="scene-items-layer"></div>
+        <div id="scene-hotspots" class="scene-hotspots"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay de Puzzles Mecânicos Dedicados (Mini-games) -->
+  <div class="challenge-overlay hidden" id="challenge-overlay">
+    <div class="challenge-card">
+      <button id="challenge-close" class="challenge-close" type="button">Fechar</button>
+      <p class="eyebrow">Puzzle de Investigação</p>
+      <h2 id="challenge-title">Desafio</h2>
+      <p id="challenge-story" class="challenge-story"></p>
+      <p id="challenge-clue" class="challenge-clue"></p>
+      <div id="challenge-body" class="challenge-body"></div>
+      <p id="challenge-progress" class="challenge-progress"></p>
+    </div>
+  </div>
+
+  <!-- Overlay de Vitória Gótica -->
+  <div class="victory-overlay hidden" id="victory-overlay">
+    <div class="victory-card">
+      <p class="eyebrow">Mistério Resolvido</p>
+      <h2>Pote de Doces Coletado!</h2>
+      <p>Parabéns, Investigador! Você resolveu com inteligência o enigma da Cozinha Misteriosa.</p>
+      <a class="scene-link" href="mapa.html">Ir para o Mapa</a>
+    </div>
+  </div>
+
+  <!-- Sistema de Efeitos Sonoros com Fallback e Áudio Tag -->
+  <audio id="fx-audio" preload="none"
+    data-success="assets/audio/sfx_success.mp3"
+    data-locked="assets/audio/sfx_locked.mp3"
+    data-pickup="assets/audio/sfx_pickup.mp3"
+    data-click="assets/audio/sfx_click.mp3"></audio>
+
+  <!-- Feedbacks Dinâmicos: Toasts e Tooltips -->
+  <div class="story-toast" id="story-toast"></div>
+  <div class="gothic-tooltip" id="gothic-tooltip">Passe o mouse pela cena e investigue pontos ocultos.</div>
+
+  <!-- Scripts: Primeiro a História (Dados) e depois o Motor (Lógica) -->
+  <script src="story.js?v=20260520a"></script>
+  <script src="engine.js?v=20260520a"></script>
+</body>
+</html>

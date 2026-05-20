@@ -485,7 +485,7 @@ body.inventory-open {
   border: 1px solid transparent;
   background: transparent;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: default !important;
   transition: box-shadow 120ms ease, border-color 120ms ease, background-color 120ms ease;
 }
 
@@ -987,12 +987,6 @@ body.debug-hotspots .invisible-hotspot::after {
   to { transform: translateY(0); opacity: 1; }
 }
 
-@media (max-width: 900px) {
-  .scene-image-wrap {
-    min-height: 100dvh;
-    height: auto;
-    padding-top: clamp(56px, 8vh, 76px);
-
 /* Ajustes finais do Hall: sprites, combinacao e enquadramento da cena */
 .scene-frame {
   max-height: calc(100dvh - 170px);
@@ -1077,6 +1071,12 @@ body.debug-hotspots .invisible-hotspot::after {
   0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.76; }
   50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
 }
+
+@media (max-width: 900px) {
+  .scene-image-wrap {
+    min-height: 100dvh;
+    height: auto;
+    padding-top: clamp(56px, 8vh, 76px);
     padding-bottom: clamp(92px, 16vh, 170px);
   }
 
@@ -1733,3 +1733,84 @@ button.re-slot {
     width: calc(100vw - 16px);
   }
 }
+
+/* === Visual Overlays and State Scenery Layers === */
+.overlays-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.scene-visual-overlay {
+  position: absolute;
+  pointer-events: none;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 9;
+}
+
+/* === Gothic Dialogue Box === */
+.dialog-box {
+  position: fixed;
+  bottom: clamp(68px, 11vh, 120px);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  width: min(94vw, 840px);
+  background: linear-gradient(135deg, rgba(20, 24, 34, 0.96), rgba(9, 12, 23, 0.98));
+  border: 1px solid rgba(224, 189, 99, 0.58);
+  border-radius: 12px;
+  padding: 1.1rem 1.6rem;
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), inset 0 0 20px rgba(224, 189, 99, 0.08);
+}
+
+.dialog-box.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dialog-frame {
+  position: relative;
+}
+
+.dialog-speaker {
+  display: inline-block;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffe3a1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(224, 189, 99, 0.35);
+  padding-bottom: 2px;
+}
+
+.dialog-text {
+  margin: 0;
+  font-family: "Crimson Text", Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.52;
+  color: #fde8b8;
+}
+
+.dialog-indicator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 0.85rem;
+  color: rgba(224, 189, 99, 0.72);
+  animation: dialogIndicatorBlink 1.4s infinite;
+}
+
+@keyframes dialogIndicatorBlink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
