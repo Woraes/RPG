@@ -20,35 +20,35 @@ const STORY_DATA = {
       id: "banquinho_dobravel",
       name: "Banquinho Dobrável",
       emoji: "🪑",
-      sprite: "itens/banquinho_dobravel.png",
+      sprite: "assets/images/itens/banquinho_dobravel.png",
       description: "Um banquinho pequeno e leve. Pode ser arrastado para alcançar lugares altos."
     },
     chave_fenda_enferrujada: {
       id: "chave_fenda_enferrujada",
       name: "Chave de Fenda Enferrujada",
       emoji: "🔧",
-      sprite: "itens/chave_fenda_enferrujada.png",
+      sprite: "assets/images/itens/chave_fenda_enferrujada.png",
       description: "Ferramenta de metal com cabo de madeira. A ponta está oxidada mas ainda funciona."
     },
     mapa_costa: {
       id: "mapa_costa",
       name: "Mapa da Costa",
       emoji: "🗺️",
-      sprite: "itens/mapa_costa.png",
+      sprite: "assets/images/itens/mapa_costa.png",
       description: "Mapa antigo marcando pontos costeiros. Contém pistas visuais sobre os símbolos do baú."
     },
     frasco_oleo: {
       id: "frasco_oleo",
       name: "Frasco de Óleo",
       emoji: "🧴",
-      sprite: "itens/frasco_oleo.png",
+      sprite: "assets/images/itens/frasco_oleo.png",
       description: "Óleo lubrificante com aroma de âmbar. Serve para desferrujar mecanismos oxidados."
     },
     manivela_bronze: {
       id: "manivela_bronze",
       name: "Manivela de Bronze",
       emoji: "🔩",
-      sprite: "itens/manivela_bronze.png",
+      sprite: "assets/images/itens/manivela_bronze.png",
       description: "Peça de bronze pesada com encaixes específicos. Parece faltar em algum mecanismo importante."
     }
   },
@@ -62,6 +62,7 @@ const STORY_DATA = {
   puzzles: {
     puzzle_baú_marítimo: {
       title: "Código do Baú Marítimo",
+      image: "assets/images/scenes/baú_marítimo_closed.png",
       story: "O baú está trancado com um mecanismo de símbolos. Não é coincidência.",
       clue: "Procure pistas na sala: o mapa, o livro, a rosa dos ventos... Tudo aponta para uma sequência.",
       kind: "sequence",
@@ -73,6 +74,7 @@ const STORY_DATA = {
 
     puzzle_mecanismo_trava: {
       title: "Trava Rotativa do Farol",
+      image: "assets/images/scenes/painel_mecanismo.png",
       story: "A porta está travada por um mecanismo antigo de trilhas metálicas. Preciso conectar a energia.",
       clue: "A manivela encaixa no topo. O óleo deve ser aplicado ao eixo oxidado primeiro.",
       kind: "mechanical",
@@ -87,14 +89,14 @@ const STORY_DATA = {
   rooms: {
     casa_farol: {
       title: "Casa de Apoio do Farol",
-      image: "assets/images/casa_farol_principal.png",
+      image: "assets/images/scenes/casa_farol_principal.png",
       goal: "A porta para a torre está travada. Encontre a manivela correta e libere o mecanismo.",
       
       // Sobreposições visuais (overlays) condicionadas a flags
       overlays: [
         {
           flag: "puzzle_baú_resolvido",
-          image: "assets/images/baú_marítimo_open.png",
+          image: "assets/images/scenes/baú_marítimo_open.png",
           x: 8,
           y: 75,
           w: 15,
@@ -140,7 +142,7 @@ const STORY_DATA = {
             scene: {
               id: "closeup_estante",
               title: "Livros Antigos",
-              image: "assets/images/estante_livros_closeup.png",
+              image: "assets/images/scenes/estante_livros_closeup.png",
               hotspots: [
                 {
                   id: "livro_maré",
@@ -172,7 +174,7 @@ const STORY_DATA = {
             scene: {
               id: "closeup_mesa",
               title: "Mesa com Ferramentas",
-              image: "assets/images/mesa_trabalho_closeup.png",
+              image: "assets/images/scenes/mesa_trabalho_closed.png",
               hotspots: [
                 {
                   id: "chave_fenda_pickup",
