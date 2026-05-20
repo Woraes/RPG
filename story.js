@@ -90,6 +90,7 @@ const STORY_DATA = {
     casa_farol: {
       title: "Casa de Apoio do Farol",
       image: "assets/images/scenes/casa_farol_principal.png",
+      intro: "O mar ruge lá fora. Preciso destrancar a torre do farol para sinalizar ajuda antes que a tempestade piore.",
       goal: "A porta para a torre está travada. Encontre a manivela correta e libere o mecanismo.",
       
       // Sobreposições visuais (overlays) condicionadas a flags
@@ -348,6 +349,22 @@ const STORY_DATA = {
             type: "message",
             message: "N ⬆️, L ➡️, S ⬇️, O ⬅️. As direções em ordem."
           }
+        },
+
+        // 12. Banquinho Coletável (Perto da cama)
+        {
+          id: "banquinho_pickup",
+          label: "Banquinho Dobrável",
+          x: 20,
+          y: 80,
+          w: 8,
+          h: 12,
+          action: {
+            type: "pickup",
+            itemId: "banquinho_dobravel",
+            flag: "picked_banquinho"
+          },
+          inactiveIfFlag: "picked_banquinho"
         }
       ]
     }

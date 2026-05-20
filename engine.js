@@ -331,7 +331,39 @@
 
   // --- ACTIONS HANDLER ---
   function handleAction(action, rerenderSceneFn, draggedItemId = null) {
-    if (!action || !action.type) return;
+    if (!action) return;
+
+    // Se houver uma condição de item necessário (e não for drag_place que já trata isso)
+    if (action.condition && action.type !== 'drag_place') {
+      const itemToUse = draggedItemId || equippedItemId;
+      if (itemToUse !== action.condition) {
+        if (action.conditionFailedMessage) {
+          triggerDialogue([{ speaker: 'Liora Voss', text: action.conditionFailedMessage }]);
+        } else {
+          showToast(`Requer: ${STORY_DATA.items[action.condition]?.name || action.condition}`);
+        }
+        return;
+      }
+
+      // Se passou na condição e tem um onUseItem definido
+      if (action.onUseItem) {
+        if (action.onUseItem.setFlag) setFlag(action.onUseItem.setFlag);
+        if (action.onUseItem.message) {
+          triggerDialogue([{ speaker: 'Liora Voss', text: action.onUseItem.message }]);
+        }
+        if (action.onUseItem.removeItem) removeItem(action.condition);
+        
+        renderAll();
+        if (rerenderSceneFn) rerenderSceneFn();
+        return;
+      }
+    }
+
+    // 0. AÇÃO APENAS MENSAGEM
+    if (action.type === 'message') {
+      triggerDialogue([{ speaker: 'Liora Voss', text: action.message }]);
+      return;
+    }
 
     // 1. AÇÃO IR PARA SALA (goto)
     if (action.type === 'goto') {
@@ -421,7 +453,19 @@
       openChallenge(puzzleDef, () => {
         setFlag(action.onSuccess.flag);
         playSfx('success');
-        showToast(action.onSuccess.message || "Enigma resolvido!");
+        
+        if (action.onSuccess.message) {
+          triggerDialogue([{ speaker: 'Liora Voss', text: action.onSuccess.message }], () => {
+            if (action.onSuccess.victory) {
+              victoryOverlay.classList.remove('hidden');
+            }
+          });
+        } else {
+          showToast("Enigma resolvido!");
+          if (action.onSuccess.victory) {
+            victoryOverlay.classList.remove('hidden');
+          }
+        }
         
         renderAll();
         if (rerenderSceneFn) rerenderSceneFn();
@@ -1051,7 +1095,17 @@
 
     // Inicia na sala salva ou padrão
     const roomToLoad = state.currentRoom || METADATA.startingRoom;
+    console.log(`%c 🗝️ RPG Engine: Carregando ${METADATA.title}... `, 'background: #121831; color: #d9b765; font-weight: bold; padding: 4px;');
+    
     enterRoom(roomToLoad);
+
+    // Dispara a introdução da sala se existir
+    const introMsg = STORY_DATA.rooms[roomToLoad]?.intro;
+    if (introMsg) {
+      setTimeout(() => {
+        triggerDialogue([{ speaker: 'Liora Voss', text: introMsg }]);
+      }, 800);
+    }
   }
 
   // Executa inicialização
