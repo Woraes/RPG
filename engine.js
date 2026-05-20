@@ -10,6 +10,10 @@
     return;
   }
 
+  // --- LIMPAR DADOS LEGADOS ---
+  const legacyKeys = ['misterio.storyState', 'cozinha_misteriosa_GDD.playerName', 'cozinha_misteriosa_GDD.storyState'];
+  legacyKeys.forEach(key => localStorage.removeItem(key));
+
   const METADATA = STORY_DATA.metadata;
   const STORAGE_KEY = `${METADATA.id}.storyState`;
 
