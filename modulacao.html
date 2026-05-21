@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Modulação</title>
+  <link rel="stylesheet" href="admin.css?v=20260521c">
+</head>
+<body class="admin-page">
+  <header class="admin-topbar">
+    <div>
+      <p class="admin-eyebrow">Admin</p>
+      <h1>Painel de Modulação</h1>
+      <p class="admin-muted">Monte sala com fundo, overlays, itens e puzzles e gere JSON para story.js.</p>
+    </div>
+    <div class="admin-actions">
+      <a href="mapa.html" class="admin-btn ghost">Mapa</a>
+      <button id="admin-logout" class="admin-btn ghost" type="button">Sair do admin</button>
+    </div>
+  </header>
+
+  <main class="admin-grid">
+    <section class="admin-panel admin-panel-wide admin-visual-panel">
+      <div class="admin-visual-head">
+        <div>
+          <h2>Preview visual</h2>
+          <p class="admin-muted">Arraste cada peça para posicionar a sala. Clique em uma peça para editar os dados finos.</p>
+        </div>
+        <div class="admin-inline admin-visual-actions">
+          <button id="preview-sync" class="admin-btn ghost" type="button">Sincronizar preview</button>
+          <button id="preview-reset" class="admin-btn ghost" type="button">Resetar seleção</button>
+        </div>
+      </div>
+      <div class="admin-preview-stage" id="mod-preview-stage">
+        <img id="mod-preview-image" class="admin-preview-image" alt="Preview da sala">
+        <div id="mod-preview-layer" class="admin-preview-layer"></div>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Cenário base</h2>
+      <label for="room-preset">Carregar sala existente</label>
+      <div class="admin-inline">
+        <select id="room-preset"></select>
+        <button id="load-room-preset" class="admin-btn ghost" type="button">Carregar</button>
+      </div>
+
+      <label for="room-id">ID da sala</label>
+      <input id="room-id" type="text" value="casa_farol">
+
+      <label for="room-title">Título</label>
+      <input id="room-title" type="text" value="Casa de Apoio do Farol">
+
+      <label for="room-image">Imagem de fundo (path)</label>
+      <input id="room-image" type="text" value="assets/images/scenes/casa_farol_principal.png">
+
+      <label for="room-goal">Objetivo</label>
+      <textarea id="room-goal" rows="3">A porta para a torre está travada. Encontre a manivela correta e libere o mecanismo.</textarea>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Overlay visual</h2>
+      <div class="admin-inline">
+        <input id="overlay-flag" type="text" placeholder="flag ex: puzzle_bau_resolvido">
+        <input id="overlay-image" type="text" placeholder="imagem ex: assets/images/scenes/bau_open.png">
+      </div>
+      <div class="admin-inline">
+        <input id="overlay-x" type="number" placeholder="x" min="0" max="100">
+        <input id="overlay-y" type="number" placeholder="y" min="0" max="100">
+        <input id="overlay-w" type="number" placeholder="w" min="1" max="100">
+        <input id="overlay-h" type="number" placeholder="h" min="1" max="100">
+      </div>
+      <div class="admin-inline">
+        <button id="add-overlay" class="admin-btn" type="button">Adicionar overlay</button>
+        <button id="update-overlay" class="admin-btn ghost" type="button">Atualizar selecionado</button>
+      </div>
+      <ul id="overlay-list" class="admin-list"></ul>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Item no cenário</h2>
+      <div class="admin-inline">
+        <input id="item-id" type="text" placeholder="itemId ex: banquinho_dobravel">
+        <input id="item-label" type="text" placeholder="label ex: Banquinho">
+      </div>
+      <div class="admin-inline">
+        <input id="item-x" type="number" placeholder="x" min="0" max="100">
+        <input id="item-y" type="number" placeholder="y" min="0" max="100">
+        <input id="item-w" type="number" placeholder="w" min="1" max="100">
+        <input id="item-h" type="number" placeholder="h" min="1" max="100">
+      </div>
+      <div class="admin-inline">
+        <button id="add-item-hotspot" class="admin-btn" type="button">Adicionar item</button>
+        <button id="update-item-hotspot" class="admin-btn ghost" type="button">Atualizar selecionado</button>
+      </div>
+      <ul id="item-list" class="admin-list"></ul>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Puzzle hotspot</h2>
+      <div class="admin-inline">
+        <input id="puzzle-id" type="text" placeholder="puzzleId ex: puzzle_mecanismo_trava">
+        <input id="puzzle-label" type="text" placeholder="label do hotspot">
+      </div>
+      <div class="admin-inline">
+        <input id="puzzle-flag" type="text" placeholder="flag sucesso ex: trava_destrancada">
+        <input id="puzzle-msg" type="text" placeholder="mensagem sucesso">
+      </div>
+      <div class="admin-inline">
+        <input id="puzzle-x" type="number" placeholder="x" min="0" max="100">
+        <input id="puzzle-y" type="number" placeholder="y" min="0" max="100">
+        <input id="puzzle-w" type="number" placeholder="w" min="1" max="100">
+        <input id="puzzle-h" type="number" placeholder="h" min="1" max="100">
+      </div>
+      <div class="admin-inline">
+        <button id="add-puzzle-hotspot" class="admin-btn" type="button">Adicionar puzzle</button>
+        <button id="update-puzzle-hotspot" class="admin-btn ghost" type="button">Atualizar selecionado</button>
+      </div>
+      <ul id="puzzle-list" class="admin-list"></ul>
+    </section>
+
+    <section class="admin-panel">
+      <h2>Definição de puzzle</h2>
+      <div class="admin-inline">
+        <input id="pdef-id" type="text" placeholder="id ex: puzzle_bau_maritimo">
+        <input id="pdef-title" type="text" placeholder="título">
+      </div>
+      <div class="admin-inline">
+        <input id="pdef-kind" type="text" placeholder="kind ex: sequence">
+        <input id="pdef-image" type="text" placeholder="imagem ex: assets/images/scenes/painel.png">
+      </div>
+      <textarea id="pdef-story" rows="2" placeholder="story"></textarea>
+      <textarea id="pdef-clue" rows="2" placeholder="clue"></textarea>
+      <textarea id="pdef-options" rows="2" placeholder='options JSON ex: ["Maré","Norte"]'></textarea>
+      <textarea id="pdef-answer" rows="2" placeholder='answer JSON/string ex: ["Maré","Norte"] ou "1234"'></textarea>
+      <div class="admin-inline">
+        <button id="add-puzzle-def" class="admin-btn" type="button">Adicionar puzzle</button>
+        <button id="update-puzzle-def" class="admin-btn ghost" type="button">Atualizar selecionado</button>
+      </div>
+      <ul id="pdef-list" class="admin-list"></ul>
+    </section>
+
+    <section class="admin-panel admin-panel-wide">
+      <h2>JSON gerado</h2>
+      <button id="generate-json" class="admin-btn" type="button">Gerar rooms + puzzles</button>
+      <button id="copy-json" class="admin-btn ghost" type="button">Copiar JSON</button>
+      <textarea id="json-output" rows="16" spellcheck="false"></textarea>
+      <p class="admin-muted">Cole os blocos em rooms e puzzles no story.js.</p>
+    </section>
+  </main>
+
+  <script src="story.js?v=20260521c"></script>
+  <script src="modulacao.js?v=20260521c"></script>
+</body>
+</html>

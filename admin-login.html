@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Admin</title>
+  <link rel="stylesheet" href="admin.css?v=20260521a">
+</head>
+<body class="admin-page">
+  <main class="admin-wrap">
+    <section class="admin-card">
+      <p class="admin-eyebrow">Área Restrita</p>
+      <h1>Acesso de Administração</h1>
+      <p class="admin-muted">Entre com o PIN para abrir o painel de modulação.</p>
+
+      <form id="admin-login-form" class="admin-form">
+        <label for="admin-pin">PIN</label>
+        <input id="admin-pin" name="admin-pin" type="password" required minlength="4" maxlength="24" autocomplete="off">
+        <button type="submit">Entrar no painel</button>
+      </form>
+
+      <p id="admin-login-error" class="admin-error hidden">PIN inválido.</p>
+      <a class="admin-link" href="mapa.html">Voltar ao mapa</a>
+    </section>
+  </main>
+
+  <script src="modulacao.js?v=20260521a"></script>
+</body>
+</html>

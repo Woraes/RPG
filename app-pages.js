@@ -5,6 +5,7 @@
   const STORY_ID = "chave_faroleiro_cap01";
   const PLAYER_KEY = `${STORY_ID}.playerName`;
   const STATE_KEY = `${STORY_ID}.storyState`;
+  const ADMIN_KEY = `${STORY_ID}.isAdmin`;
 
   function getPlayerName() {
     return localStorage.getItem(PLAYER_KEY) || '';
@@ -17,6 +18,14 @@
   function clearPlayerName() {
     localStorage.removeItem(PLAYER_KEY);
     localStorage.removeItem(STATE_KEY);
+  }
+
+  function isAdmin() {
+    return localStorage.getItem(ADMIN_KEY) === '1';
+  }
+
+  function clearAdmin() {
+    localStorage.removeItem(ADMIN_KEY);
   }
 
   // Limpar dados antigos de histórias anteriores no localStorage
@@ -41,6 +50,7 @@
       // Limpar dados antigos e começar jogo limpo
       clearLegacyStorageKeys();
       clearPlayerName();
+      clearAdmin();
       setPlayerName(value);
 
       // Redireciona diretamente para a tela unificada de jogo
@@ -58,6 +68,11 @@
       return;
     }
     welcome.textContent = 'Investigador ativo: ' + name;
+
+    const adminPanelLink = document.getElementById('admin-panel-link');
+    if (adminPanelLink && isAdmin()) {
+      adminPanelLink.classList.remove('hidden');
+    }
   }
 
   // C. DESCONECTAR / LOGOUT
@@ -65,6 +80,7 @@
   if (logoutBtn) {
     logoutBtn.addEventListener('click', function () {
       clearPlayerName();
+      clearAdmin();
       window.location.href = 'login.html';
     });
   }
